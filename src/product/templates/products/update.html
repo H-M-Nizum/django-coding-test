@@ -1,0 +1,32 @@
+{% extends 'backend/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div style="width: 60%; margin: auto;">
+    <h2>Update Product</h2>
+    <form method="post" novalidate>
+      <!-- {{form | crispy}} -->
+      {% csrf_token %}
+  
+      <!-- if unauthorize user try for login show a error message -->
+      {% if form.non_field_errors %}
+      {% for er in form.non_field_errors %}
+          <p class="bg-danger text-white p-3">{{er}}</p>
+      {% endfor %}
+      {% endif %}
+  
+  
+      {% for fm in form %}
+      {{fm.label_tag}}
+      {{fm}}
+      {{fm.errors | striptags}}
+    
+      {% endfor %}
+      <br>
+      {{ product_variant_price_form.as_p }}
+      <br>
+      <button type="submit" class="btn btn-info">Update</button>
+  </form>
+</div>
+
+{% endblock %}

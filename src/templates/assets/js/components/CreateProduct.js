@@ -78,6 +78,32 @@ const CreateProduct = (props) => {
     let saveProduct = (event) => {
         event.preventDefault();
         // TODO : write your code here to save the product
+        // Prepare product data
+        const productName = document.getElementById('product-name').value;
+        const productSKU = document.getElementById('product-sku').value;
+        const productDescription = document.getElementById('product-description').value;
+
+        console.log(productName)
+
+        try {
+            // Send data to backend
+            fetch('/product/create/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: productName,
+                    sku: productSKU,
+                    description: productDescription,
+     
+                })
+            });
+            
+        } catch (error) {
+            console.error('Error saving product:', error);
+            alert('An error occurred while saving the product.');
+        }
     }
 
 
@@ -90,15 +116,15 @@ const CreateProduct = (props) => {
                             <div className="card-body">
                                 <div className="form-group">
                                     <label htmlFor="">Product Name</label>
-                                    <input type="text" placeholder="Product Name" className="form-control"/>
+                                    <input id="product-name" type="text" placeholder="Product Name" className="form-control"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="">Product SKU</label>
-                                    <input type="text" placeholder="Product Name" className="form-control"/>
+                                    <input id="product-sku" type="text" placeholder="Product Name" className="form-control"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="">Description</label>
-                                    <textarea id="" cols="30" rows="4" className="form-control"></textarea>
+                                    <textarea id="product-description" cols="30" rows="4" className="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +242,7 @@ const CreateProduct = (props) => {
                 </div>
 
                 <button type="button" onClick={saveProduct} className="btn btn-lg btn-primary">Save</button>
-                <button type="button" className="btn btn-secondary btn-lg">Cancel</button>
+                <button type="button" className="btn btn-secondary btn-lg mx-3">Cancel</button>
             </section>
         </div>
     );
